@@ -1,0 +1,6 @@
+learning_google_drive_api/
+client_secret.json
+token_drive_v3.pickle
+venv/
+year_folder_id.txt
+.idea/*
