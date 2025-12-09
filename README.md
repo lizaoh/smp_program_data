@@ -1,4 +1,4 @@
 # Scripts for getting program data for SMP conferences
 `program_extraction_scripts` contains scripts for each year for extracting author, affiliation, title, and abstracts (if possible) for the talks/posters.
 
-`create_abstract_docs_scripts` contains scripts for creating and writing the Google Doc for each talk/poster's abstract. This is currently for making the documents one-by-one.
+`create_abstract_docs_scripts` contains scripts for creating and writing the Google Doc for each talk/poster's abstract using Google Drive API. This is currently for making the documents one-by-one.
