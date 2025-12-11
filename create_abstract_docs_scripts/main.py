@@ -10,28 +10,24 @@ https://learndataanalysis.org/google-drive-api-in-python-getting-started-lesson-
 https://www.youtube.com/watch?v=9K2P2bWEd90&list=PL3JVwFmb_BnTamTxXbmlwpspYdpmaHdbz
 """
 import create_abstract_doc
+import sheets_edit
+import os
 
 
-def main():
+def main(year=None):
     parent_folder_id = []
     with open("year_folder_id.txt") as f:
         parent_folder_id.append(f.read())
 
-    year = '1999'
-    first_author = 'Townsend'
-    title_word = 'Hazard'
-    file_name = f"{year}-{first_author}-{title_word}"
-    text_content = 'A new type of hazard function, based on CDFs rather than survivor functions, is proposed. The integrated version is likewise analogous to the traditional integrated hazard function. Just as the traditional integrated hazard function leads to a useful capacity function in the case of minimum-time (i.e., race = OR) processing, the new integrated hazard function permits derivation of a novel capacity function that is appropriate for exhaustive processing experiments.'
+    with open(f"{year}_sheet_id.txt") as f:
+        program_sheet_id = f.read()
 
-    print(file_name)
+    with open("combined_sheet_id.txt") as f:
+        combined_sheet_id = f.read()
 
-    create_abstract_doc.create_and_write_file(
-        file_name,
-        parent_folder_id,
-        text_content
-    )
+    sheets_edit.make_and_update_abstract(year, program_sheet_id, combined_sheet_id, parent_folder_id)
 
 
 if __name__ == '__main__':
-    main()
+    main(year='1998')
 

@@ -30,6 +30,7 @@ def create_and_write_file(file_name: str, parents: list, text_content: str):
     ).execute()
 
     # print(response)
-    print(f"https://docs.google.com/document/d/{response.get('id')}/edit?usp=sharing")
-    return response
+    url = f"https://docs.google.com/document/d/{response.get('id')}/edit?usp=sharing"
+    print(url)
+    return response, url
 

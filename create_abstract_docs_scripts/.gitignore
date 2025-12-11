@@ -1,6 +1,6 @@
 learning_google_drive_api/
 client_secret.json
-token_drive_v3.pickle
+token_*.pickle
 venv/
-year_folder_id.txt
+*_id.txt
 .idea/*
