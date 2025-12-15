@@ -16,18 +16,23 @@ import os
 
 def main(year=None):
     parent_folder_id = []
+    abstracts_folder_id = []
+
+    with open("abstracts_folder_id.txt") as f:
+        abstracts_folder_id.append(f.read())
+
     with open("year_folder_id.txt") as f:
         parent_folder_id.append(f.read())
 
-    with open(f"{year}_sheet_id.txt") as f:
+    with open("year_sheet_id.txt") as f:
         program_sheet_id = f.read()
 
     with open("combined_sheet_id.txt") as f:
         combined_sheet_id = f.read()
 
-    sheets_edit.make_and_update_abstract(year, program_sheet_id, combined_sheet_id, parent_folder_id)
+    sheets_edit.make_and_update_abstract(year, program_sheet_id, combined_sheet_id, abstracts_folder_id)
 
 
 if __name__ == '__main__':
-    main(year='1998')
+    main(year='2001')
 

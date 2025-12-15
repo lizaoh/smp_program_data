@@ -61,12 +61,15 @@ def append_data_row(year=None, spreadsheet_id=None, cell_range_insert=None, valu
     ).execute()
 
 
-def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=None, parent_folder_id=None):
+def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=None, abstracts_folder_id=None):
     response = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
         majorDimension='ROWS',
         range=f'smp{year}_program'
     ).execute()
+
+    # Create and get folder id for this year's abstract docs
+    parent_folder_id = create_abstract_doc.create_year_folder(year, abstracts_folder_id)
 
     # Create df of spreadsheet
     columns = response['values'][0]
@@ -76,10 +79,10 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         "author(s)": "authors",
         "affiliation(s)": "affiliations"
     })
-    # small_df = df[:10]
-    rest_of_df = df[66:]
+    # small_df = df[:5]
+    # rest_of_df = df[41:]
 
-    for row in rest_of_df.itertuples(index=False):
+    for row in df.itertuples(index=False):
         # Get first author last name amd title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
@@ -106,7 +109,8 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
             row.authors,
             row.affiliations,
             row.title,
-            row.type,
+            '',     # session (topic of presentations)
+            '',     # type (talk, plenary, poster, symposium, etc.)
             abstract_url
         ]]
 

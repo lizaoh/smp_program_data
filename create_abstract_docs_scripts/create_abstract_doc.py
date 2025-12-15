@@ -1,6 +1,7 @@
 import io
 from googleapiclient.http import MediaIoBaseUpload
 from Google import Create_Service
+import pandas as pd
 
 CLIENT_SECRET_FILE = 'client_secret.json'
 API_NAME = 'drive'
@@ -8,6 +9,28 @@ API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+
+
+def create_year_folder(year=None, abstracts_folder_id=None):
+    query = f"parents = '{abstracts_folder_id[0]}'"
+    response = service.files().list(q=query).execute()
+    folders = response.get('files')
+    folders_df = pd.DataFrame(folders)
+
+    # Get year folder id if folder already exists
+    if year in list(folders_df['name']):
+        return [folders_df.loc[folders_df['name'] == year, 'id'][0]]    # Get latest one
+    # Otherwise, create folder
+    else:
+        file_metadata = {
+            'name': f'{year}',
+            'mimeType': 'application/vnd.google-apps.folder',
+            'parents': abstracts_folder_id
+        }
+
+        response = service.files().create(body=file_metadata).execute()
+
+        return [response.get('id')]
 
 
 def create_and_write_file(file_name: str, parents: list, text_content: str):
