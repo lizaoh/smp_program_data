@@ -23,9 +23,13 @@ STOPWORDS = {
     "on", "in", "of", "for", "to", "and", "or",
     "does", "do", "did", "can", "will", "shall",
     "from", "with", "about", "using", "via",
-    "should", "would", "could",
-    "toward", "towards", "beyond",
-    "new", "model", "modeling"
+    "should", "would", "could", "there",
+    "toward", "towards", "beyond", "developing"
+    "new", "model", "modeling", "modelling",
+    "human", "application", "measuring", "effects",
+    "effect", "method", "analysis", "data", "testing",
+    "test", "simple", "assessing", "theories", "theory",
+    "comparing"
 }
 
 
@@ -34,8 +38,8 @@ def first_substantive_word(title):
     words = re.findall(r"[A-Za-z0-9'-]+", title.lower())
 
     for w in words:
-        if "-" in w:  # skip hyphenated words
-            continue
+        if "-" in w:  # replace hyphen with underscore
+            w.replace('-', '_')
         if w.isdigit():  # skip standalone numbers
             continue
         if w in STOPWORDS:
@@ -80,9 +84,9 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         "affiliation(s)": "affiliations"
     })
     # small_df = df[:5]
-    # rest_of_df = df[41:]
+    rest_of_df = df[5:]
 
-    for row in df.itertuples(index=False):
+    for row in rest_of_df.itertuples(index=False):
         # Get first author last name amd title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
@@ -93,6 +97,10 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
             abstract_text = row.abstract
         else:
             abstract_text = 'n/a'
+
+        # Replace hyphen with underscore in hyphenated last names
+        if '-' in first_author:
+            first_author = first_author.replace('-', '_')
 
         file_name = f"{year}-{first_author}-{title_word}"
 

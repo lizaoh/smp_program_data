@@ -21,9 +21,6 @@ def main(year=None):
     with open("abstracts_folder_id.txt") as f:
         abstracts_folder_id.append(f.read())
 
-    with open("year_folder_id.txt") as f:
-        parent_folder_id.append(f.read())
-
     with open("year_sheet_id.txt") as f:
         program_sheet_id = f.read()
 
@@ -34,5 +31,5 @@ def main(year=None):
 
 
 if __name__ == '__main__':
-    main(year='2001')
+    main(year='2002')
 
