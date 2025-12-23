@@ -24,12 +24,12 @@ STOPWORDS = {
     "does", "do", "did", "can", "will", "shall",
     "from", "with", "about", "using", "via",
     "should", "would", "could", "there",
-    "toward", "towards", "beyond", "developing"
+    "toward", "towards", "beyond", "developing",
     "new", "model", "modeling", "modelling",
     "human", "application", "measuring", "effects",
     "effect", "method", "analysis", "data", "testing",
     "test", "simple", "assessing", "theories", "theory",
-    "comparing"
+    "comparing", "measures", "study"
 }
 
 
@@ -102,6 +102,9 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         if '-' in first_author:
             first_author = first_author.replace('-', '_')
 
+        if '-' in title_word:
+            title_word = title_word.replace('-', '_')
+
         file_name = f"{year}-{first_author}-{title_word}"
 
         print(file_name)
@@ -117,7 +120,6 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
             row.authors,
             row.affiliations,
             row.title,
-            '',     # session (topic of presentations)
             '',     # type (talk, plenary, poster, symposium, etc.)
             abstract_url
         ]]
