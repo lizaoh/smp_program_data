@@ -29,7 +29,8 @@ STOPWORDS = {
     "human", "application", "measuring", "effects",
     "effect", "method", "analysis", "data", "testing",
     "test", "simple", "assessing", "theories", "theory",
-    "comparing", "measures", "study"
+    "comparing", "measures", "study", "some", "role",
+    "evaluating", "measurement", "no"
 }
 
 
@@ -38,12 +39,14 @@ def first_substantive_word(title):
     words = re.findall(r"[A-Za-z0-9'-]+", title.lower())
 
     for w in words:
-        if "-" in w:  # replace hyphen with underscore
-            w.replace('-', '_')
         if w.isdigit():  # skip standalone numbers
             continue
-        if w in STOPWORDS:
+        if w in STOPWORDS:  # skip any common words
             continue
+        if "'" in w:    # skip words with apostrophe
+            continue
+        if "-" in w:  # replace hyphen with underscore
+            w = w.replace('-', '_')
 
         # capitalize first letter
         return w.capitalize()
@@ -83,10 +86,10 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         "author(s)": "authors",
         "affiliation(s)": "affiliations"
     })
-    # small_df = df[:5]
-    rest_of_df = df[5:]
+    small_df = df[:5]
+    # rest_of_df = df[5:]
 
-    for row in rest_of_df.itertuples(index=False):
+    for row in small_df.itertuples(index=False):
         # Get first author last name amd title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
@@ -101,9 +104,6 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         # Replace hyphen with underscore in hyphenated last names
         if '-' in first_author:
             first_author = first_author.replace('-', '_')
-
-        if '-' in title_word:
-            title_word = title_word.replace('-', '_')
 
         file_name = f"{year}-{first_author}-{title_word}"
 
@@ -120,7 +120,7 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
             row.authors,
             row.affiliations,
             row.title,
-            '',     # type (talk, plenary, poster, symposium, etc.)
+            row.type,     # type (talk, plenary, poster, symposium, etc.)
             abstract_url
         ]]
 
