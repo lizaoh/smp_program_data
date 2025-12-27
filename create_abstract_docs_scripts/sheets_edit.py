@@ -36,20 +36,24 @@ STOPWORDS = {
 
 def first_substantive_word(title):
     # tokenize & lowercase
-    words = re.findall(r"[A-Za-z0-9'-]+", title.lower())
+    words = re.findall(r"[A-Za-z0-9'-]+", title)
 
     for w in words:
         if w.isdigit():  # skip standalone numbers
             continue
-        if w in STOPWORDS:  # skip any common words
+        if w.lower() in STOPWORDS:  # skip any common words
             continue
         if "'" in w:    # skip words with apostrophe
             continue
         if "-" in w:  # replace hyphen with underscore
             w = w.replace('-', '_')
 
-        # capitalize first letter
-        return w.capitalize()
+        # Keep word all caps if all caps, else do titlecase
+        if w.isupper():
+            return w
+        else:
+            # capitalize first letter
+            return w.capitalize()
 
     return None
 
