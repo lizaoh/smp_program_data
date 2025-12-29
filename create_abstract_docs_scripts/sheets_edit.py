@@ -31,8 +31,11 @@ STOPWORDS = {
     "test", "simple", "assessing", "theories", "theory",
     "comparing", "measures", "study", "some", "role",
     "evaluating", "measurement", "no", "any", "bayesian",
-    "many", "applications", "we", "every"
+    "many", "applications", "we", "every", "approaches",
+    "that"
 }
+
+SKIP_CHARACTERS = ["(", ")"]    # skipping ' doesn't work
 
 
 def first_substantive_word(title):
@@ -44,7 +47,8 @@ def first_substantive_word(title):
             continue
         if w.lower() in STOPWORDS:  # skip any common words
             continue
-        if "'" in w:    # skip words with apostrophe
+        if any(char in w for char in SKIP_CHARACTERS):    # skip words with some
+                                                          # common non-letter chars
             continue
         if "-" in w:  # replace hyphen with underscore
             w = w.replace('-', '_')
@@ -91,10 +95,10 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         "author(s)": "authors",
         "affiliation(s)": "affiliations"
     })
-    # small_df = df[:5]
-    rest_of_df = df[5:]
+    small_df = df[:5]
+    # rest_of_df = df[5:]
 
-    for row in rest_of_df.itertuples(index=False):
+    for row in small_df.itertuples(index=False):
         # Get first author last name amd title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
