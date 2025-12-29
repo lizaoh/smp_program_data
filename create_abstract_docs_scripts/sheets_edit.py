@@ -30,7 +30,8 @@ STOPWORDS = {
     "effect", "method", "analysis", "data", "testing",
     "test", "simple", "assessing", "theories", "theory",
     "comparing", "measures", "study", "some", "role",
-    "evaluating", "measurement", "no"
+    "evaluating", "measurement", "no", "any", "bayesian",
+    "many", "applications", "we", "every"
 }
 
 
@@ -48,8 +49,8 @@ def first_substantive_word(title):
         if "-" in w:  # replace hyphen with underscore
             w = w.replace('-', '_')
 
-        # Keep word all caps if all caps, else do titlecase
-        if w.isupper():
+        # Return word as is if all caps or titlecase, else make it titlecase
+        if w[0].isupper():
             return w
         else:
             # capitalize first letter
@@ -90,10 +91,10 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         "author(s)": "authors",
         "affiliation(s)": "affiliations"
     })
-    small_df = df[:5]
-    # rest_of_df = df[5:]
+    # small_df = df[:5]
+    rest_of_df = df[5:]
 
-    for row in small_df.itertuples(index=False):
+    for row in rest_of_df.itertuples(index=False):
         # Get first author last name amd title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
