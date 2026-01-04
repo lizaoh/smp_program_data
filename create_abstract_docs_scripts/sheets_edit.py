@@ -23,7 +23,7 @@ STOPWORDS = {
     "on", "in", "of", "for", "to", "and", "or",
     "does", "do", "did", "can", "will", "shall",
     "from", "with", "about", "using", "via",
-    "should", "would", "could", "there",
+    "should", "would", "could", "there", "not",
     "toward", "towards", "beyond", "developing",
     "new", "model", "modeling", "modelling",
     "human", "application", "measuring", "effects",
@@ -32,14 +32,14 @@ STOPWORDS = {
     "comparing", "measures", "study", "some", "role",
     "evaluating", "measurement", "no", "any", "bayesian",
     "many", "applications", "we", "every", "approaches",
-    "that"
+    "that", "estimation"
 }
 
 SKIP_CHARACTERS = ["(", ")"]    # skipping ' doesn't work
 
 
 def first_substantive_word(title):
-    # tokenize & lowercase
+    # tokenize
     words = re.findall(r"[A-Za-z0-9'-]+", title)
 
     for w in words:
@@ -49,6 +49,8 @@ def first_substantive_word(title):
             continue
         if any(char in w for char in SKIP_CHARACTERS):    # skip words with some
                                                           # common non-letter chars
+            continue
+        if len(w) == 1:
             continue
         if "-" in w:  # replace hyphen with underscore
             w = w.replace('-', '_')
