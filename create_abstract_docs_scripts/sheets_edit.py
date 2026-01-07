@@ -20,19 +20,19 @@ service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 STOPWORDS = {
     "the", "a", "an", "is", "are", "was", "were",
     "how", "what", "why", "when", "where", "which",
-    "on", "in", "of", "for", "to", "and", "or",
-    "does", "do", "did", "can", "will", "shall",
-    "from", "with", "about", "using", "via",
-    "should", "would", "could", "there", "not",
-    "toward", "towards", "beyond", "developing",
-    "new", "model", "modeling", "modelling",
+    "on", "in", "of", "for", "to", "and", "or", "empirical",
+    "does", "do", "did", "can", "will", "shall", "dynamic",
+    "from", "with", "about", "using", "via", "our",
+    "should", "would", "could", "there", "not", "cognitive",
+    "toward", "towards", "beyond", "developing", "ecological",
+    "new", "model", "modeling", "modelling", "learning",
     "human", "application", "measuring", "effects",
     "effect", "method", "analysis", "data", "testing",
     "test", "simple", "assessing", "theories", "theory",
     "comparing", "measures", "study", "some", "role",
     "evaluating", "measurement", "no", "any", "bayesian",
     "many", "applications", "we", "every", "approaches",
-    "that", "estimation"
+    "that", "estimation", "models", "hierarchical"
 }
 
 SKIP_CHARACTERS = ["(", ")"]    # skipping ' doesn't work
