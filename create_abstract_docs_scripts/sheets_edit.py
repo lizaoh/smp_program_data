@@ -18,11 +18,11 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
 STOPWORDS = {
-    "the", "a", "an", "is", "are", "was", "were",
-    "how", "what", "why", "when", "where", "which",
+    "the", "a", "an", "is", "are", "was", "were", "exploring",
+    "how", "what", "why", "when", "where", "which", "it",
     "on", "in", "of", "for", "to", "and", "or", "empirical",
     "does", "do", "did", "can", "will", "shall", "dynamic",
-    "from", "with", "about", "using", "via", "our",
+    "from", "with", "about", "using", "via", "our", "this",
     "should", "would", "could", "there", "not", "cognitive",
     "toward", "towards", "beyond", "developing", "ecological",
     "new", "model", "modeling", "modelling", "learning",
@@ -97,10 +97,10 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         "author(s)": "authors",
         "affiliation(s)": "affiliations"
     })
-    small_df = df[:5]
+    # small_df = df[:5]
     # rest_of_df = df[5:]
 
-    for row in small_df.itertuples(index=False):
+    for row in df.itertuples(index=False):
         # Get first author last name amd title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
