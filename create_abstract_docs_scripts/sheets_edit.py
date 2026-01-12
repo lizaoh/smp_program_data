@@ -109,22 +109,23 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
         # Get abstract text, or n/a if blank
         if row.abstract:
             abstract_text = row.abstract
+
+            # Replace hyphen with underscore in hyphenated last names
+            if '-' in first_author:
+                first_author = first_author.replace('-', '_')
+
+            file_name = f"{year}-{first_author}-{title_word}"
+
+            print(file_name)
+
+            _, abstract_url = create_abstract_doc.create_and_write_file(
+                file_name,
+                parent_folder_id,
+                abstract_text
+            )
         else:
-            abstract_text = 'n/a'
-
-        # Replace hyphen with underscore in hyphenated last names
-        if '-' in first_author:
-            first_author = first_author.replace('-', '_')
-
-        file_name = f"{year}-{first_author}-{title_word}"
-
-        print(file_name)
-
-        _, abstract_url = create_abstract_doc.create_and_write_file(
-            file_name,
-            parent_folder_id,
-            abstract_text
-        )
+            # Don't make abstract doc and just put "n/a" for abstract pointer
+            abstract_url = 'n/a'
 
         row_data = [[
             year,
