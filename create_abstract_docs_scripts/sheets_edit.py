@@ -32,7 +32,7 @@ STOPWORDS = {
     "comparing", "measures", "study", "some", "role",
     "evaluating", "measurement", "no", "any", "bayesian",
     "many", "applications", "we", "every", "approaches",
-    "that", "estimation", "models", "hierarchical"
+    "that", "estimation", "models", "hierarchical", "you"
 }
 
 SKIP_CHARACTERS = ["(", ")"]    # skipping ' doesn't work
@@ -100,7 +100,8 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
     # small_df = df[:5]
     # rest_of_df = df[5:]
 
-    for row in df.itertuples(index=False):
+    # Using enumerate to keep track of what row I'm at in case of error
+    for r, row in enumerate(df.itertuples(index=False)):
         # Get first author last name amd title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
@@ -116,7 +117,7 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
 
             file_name = f"{year}-{first_author}-{title_word}"
 
-            print(file_name)
+            print(r, file_name)
 
             _, abstract_url = create_abstract_doc.create_and_write_file(
                 file_name,
