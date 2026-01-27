@@ -26,13 +26,14 @@ STOPWORDS = {
     "should", "would", "could", "there", "not", "cognitive",
     "toward", "towards", "beyond", "developing", "ecological",
     "new", "model", "modeling", "modelling", "learning",
-    "human", "application", "measuring", "effects",
-    "effect", "method", "analysis", "data", "testing",
+    "human", "application", "measuring", "effects", "much",
+    "effect", "method", "analysis", "data", "testing", "if",
     "test", "simple", "assessing", "theories", "theory",
-    "comparing", "measures", "study", "some", "role",
+    "comparing", "measures", "study", "some", "role", "another",
     "evaluating", "measurement", "no", "any", "bayesian",
     "many", "applications", "we", "every", "approaches",
-    "that", "estimation", "models", "hierarchical", "you"
+    "that", "estimation", "models", "hierarchical", "you", "as",
+    "model-based", "simulating", "influence"
 }
 
 SKIP_CHARACTERS = ["(", ")"]    # skipping ' doesn't work
