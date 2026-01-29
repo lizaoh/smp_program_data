@@ -31,5 +31,5 @@ def main(year=None):
 
 
 if __name__ == '__main__':
-    main(year='2021')
+    main(year='2022')
 

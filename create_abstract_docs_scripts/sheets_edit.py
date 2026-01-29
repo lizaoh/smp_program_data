@@ -5,6 +5,7 @@ in the overall combined spreadsheet.
 
 import io
 from googleapiclient.http import MediaIoBaseUpload
+import numpy as np
 import pandas as pd
 import re
 from Google import Create_Service
@@ -33,7 +34,7 @@ STOPWORDS = {
     "evaluating", "measurement", "no", "any", "bayesian",
     "many", "applications", "we", "every", "approaches",
     "that", "estimation", "models", "hierarchical", "you", "as",
-    "model-based", "simulating", "influence"
+    "model-based", "simulating", "influence", "more"
 }
 
 SKIP_CHARACTERS = ["(", ")"]    # skipping ' doesn't work
@@ -103,13 +104,13 @@ def make_and_update_abstract(year=None, spreadsheet_id=None, combined_sheet_id=N
 
     # Using enumerate to keep track of what row I'm at in case of error
     for r, row in enumerate(df.itertuples(index=False)):
-        # Get first author last name amd title keyword
+        # Get first author last name and title keyword
         first_author_full_name = row.authors.split(',', 1)[0]
         first_author = first_author_full_name.split(' ')[-1]
         title_word = first_substantive_word(row.title)
 
-        # Get abstract text, or n/a if blank
-        if row.abstract:
+        # Get abstract text, or n/a if blank or NaN
+        if row.abstract and pd.notna(row.abstract):
             abstract_text = row.abstract
 
             # Replace hyphen with underscore in hyphenated last names
